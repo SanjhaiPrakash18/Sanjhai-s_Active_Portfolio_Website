@@ -17,7 +17,7 @@ const Portfolio = () => {
   const messagesEndRef = useRef(null);
   const messagesContainerRef = useRef(null);
 
-  const dynamicWords = ['apps', 'AI tools', 'web apps', 'Chrome extensions', 'side projects', 'experiences'];
+  const dynamicWords = ['apps', 'AI tools', 'web apps', 'Chrome extensions', 'experiences'];
 
   // Scroll to bottom when new messages are added
   const scrollToBottom = () => {
@@ -254,7 +254,7 @@ const Portfolio = () => {
       <header className={`${darkMode ? 'bg-transparent' : theme.surfaceElevated} sticky top-0 z-50 backdrop-blur-lg bg-opacity-80`}>
         <div className="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
           <div className="flex items-center space-x-3">
-            <h1 className="font-semibold text-lg">Alex Portfolio</h1>
+            <h1 className="font-semibold text-lg">Sanjhai's Portfolio</h1>
           </div>
           
           <div className="flex items-center space-x-2">
@@ -286,8 +286,8 @@ const Portfolio = () => {
               <div className="flex justify-center mb-8">
                 <div className="w-20 h-20 rounded-full overflow-hidden shadow-lg">
                   <img 
-                    src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRkZEQjAwIi8+CjxwYXRoIGQ9Ik01MCA5MEM3Mi4wOTE0IDkwIDkwIDcyLjA5MTQgOTAgNTBDOTAgMjcuOTA4NiA3Mi4wOTE0IDEwIDUwIDEwQzI3LjkwODYgMTAgMTAgMjcuOTA4NiAxMCA1MEMxMCA3Mi4wOTE0IDI3LjkwODYgOTAgNTAgOTBaIiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLXdpZHRoPSIzIi8+CjxwYXRoIGQ9Ik0yMCA0MEMzMCA0MCA0MCAzMCA0MCAzMEM0MCAzMCA1MCAyNSA2MCAzMEM2MCAzNSA3MCA0MCA4MCA0MEw4MCA0NUw3MCA1MEw2MCA1MEw0MCA1MEwzMCA1MEwyMCA0NUwyMCA0MFoiIGZpbGw9ImJsYWNrIi8+CjxjaXJjbGUgY3g9IjM4IiBjeT0iNTgiIHI9IjMiIGZpbGw9ImJsYWNrIi8+CjxjaXJjbGUgY3g9IjYyIiBjeT0iNTgiIHI9IjMiIGZpbGw9ImJsYWNrIi8+CjxsaW5lIHgxPSI0OCIgeTE9IjY1IiB4Mj0iNDgiIHkyPSI3NSIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHA+YXRoIGQ9Ik0zNSA3OEM0MCA3NSA0NSA3NSA1MCA3NUM1NSA3NSA2MCA3NSA2NSA3OCIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIGZpbGw9Im5vbmUiLz4KPC9zdmc+" 
-                    alt="Alex Avatar" 
+                    src="/Sanj Notion Pic.png" 
+                    alt="Sanjhai Avatar" 
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -351,8 +351,8 @@ const Portfolio = () => {
                     {message.type === 'bot' && (
                       <div className="w-8 h-8 rounded-full overflow-hidden shadow-sm flex-shrink-0 mt-1">
                         <img 
-                          src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRkZEQjAwIi8+CjxwYXRoIGQ9Ik01MCA5MEM3Mi4wOTE0IDkwIDkwIDcyLjA5MTQgOTAgNTBDOTAgMjcuOTA4NiA3Mi4wOTE0IDEwIDUwIDEwQzI3LjkwODYgMTAgMTAgMjcuOTA4NiAxMCA1MEMxMCA3Mi4wOTE0IDI3LjkwODYgOTAgNTAgOTBaIiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLXdpZHRoPSIzIi8+CjxwYXRoIGQ9Ik0yMCA0MEMzMCA0MCA0MCAzMCA0MCAzMEM0MCAzMCA1MCAyNSA2MCAzMEM2MCAzNSA3MCA0MCA4MCA0MEw4MCA0NUw3MCA1MEw2MCA1MEw0MCA1MEwzMCA1MEwyMCA0NUwyMCA0MFoiIGZpbGw9ImJsYWNrIi8+CjxjaXJjbGUgY3g9IjM4IiBjeT0iNTgiIHI9IjMiIGZpbGw9ImJsYWNrIi8+CjxjaXJjbGUgY3g9IjYyIiBjeT0iNTgiIHI9IjMiIGZpbGw9ImJsYWNrIi8+CjxsaW5lIHgxPSI0OCIgeTE9IjY1IiB4Mj0iNDgiIHkyPSI3NSIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHA+YXRoIGQ9Ik0zNSA3OEM0MCA3NSA0NSA3NSA1MCA3NUM1NSA3NSA2MCA3NSA2NSA3OCIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIGZpbGw9Im5vbmUiLz4KPC9zdmc+" 
-                          alt="Alex Avatar" 
+                          src="/Sanj Notion Pic.png" 
+                          alt="Sanjhai Avatar" 
                           className="w-full h-full object-cover"
                         />
                       </div>
@@ -397,8 +397,8 @@ const Portfolio = () => {
                   <div className="flex justify-start items-start gap-3">
                     <div className="w-8 h-8 rounded-full overflow-hidden shadow-sm flex-shrink-0 mt-1">
                       <img 
-                        src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRkZEQjAwIi8+CjxwYXRoIGQ9Ik01MCA5MEM3Mi4wOTE0IDkwIDkwIDcyLjA5MTQgOTAgNTBDOTAgMjcuOTA4NiA3Mi4wOTE0IDEwIDUwIDEwQzI3LjkwODYgMTAgMTAgMjcuOTA4NiAxMCA1MEMxMCA3Mi4wOTE0IDI3LjkwODYgOTAgNTAgOTBaIiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLXdpZHRoPSIzIi8+CjxwYXRoIGQ9Ik0yMCA0MEMzMCA0MCA0MCAzMCA0MCAzMEM0MCAzMCA1MCAyNSA2MCAzMEM2MCAzNSA3MCA0MCA4MCA0MEw4MCA0NUw3MCA1MEw2MCA1MEw0MCA1MEwzMCA1MEwyMCA0NUwyMCA0MFoiIGZpbGw9ImJsYWNrIi8+CjxjaXJjbGUgY3g9IjM4IiBjeT0iNTgiIHI9IjMiIGZpbGw9ImJsYWNrIi8+CjxjaXJjbGUgY3g9IjYyIiBjeT0iNTgiIHI9IjMiIGZpbGw9ImJsYWNrIi8+CjxsaW5lIHgxPSI0OCIgeTE9IjY1IiB4Mj0iNDgiIHkyPSI3NSIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPHA+YXRoIGQ9Ik0zNSA3OEM0MCA3NSA0NSA3NSA1MCA3NUM1NSA3NSA2MCA3NSA2NSA3OCIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIGZpbGw9Im5vbmUiLz4KPC9zdmc+" 
-                        alt="Alex Avatar" 
+                        src="/Sanj Notion Pic.png" 
+                        alt="Sanjhai Avatar" 
                         className="w-full h-full object-cover"
                       />
                     </div>
@@ -449,7 +449,7 @@ const Portfolio = () => {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                placeholder="Message Alex..."
+                placeholder="Message Sanjhai..."
                 className={`flex-1 bg-transparent outline-none ${theme.text} placeholder-gray-400 font-normal py-1`}
               />
               <button
