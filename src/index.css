@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom CSS for smooth animations */
+/* Custom CSS for smooth animations and modern styling */
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -10,6 +10,13 @@
   
   body {
     font-family: 'Rethink Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+}
+
+/* Glassmorphism support */
+@supports (backdrop-filter: blur(10px)) {
+  .backdrop-blur-md {
+    backdrop-filter: blur(10px);
   }
 }
 
@@ -29,4 +36,21 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(156, 163, 175, 0.7);
+}
+
+/* Avatar hover animation */
+.avatar-container {
+  transition: transform 0.3s ease;
+}
+.avatar-container:hover {
+  transform: scale(1.05);
+}
+
+/* Prompt pill hover animation */
+.prompt-pill {
+  transition: all 0.2s ease;
+}
+.prompt-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }

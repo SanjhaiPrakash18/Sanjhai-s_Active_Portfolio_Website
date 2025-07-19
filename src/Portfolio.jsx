@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Send, Moon, Sun, RotateCcw, User, Code, Briefcase, Mail, MessageSquare, Lightbulb, ChevronUp, ChevronDown } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import Particles from 'react-tsparticles';
+import { loadFull } from 'tsparticles';
+import { debounce } from 'lodash';
 
 const Portfolio = () => {
   const [darkMode, setDarkMode] = useState(() => {
@@ -19,22 +23,24 @@ const Portfolio = () => {
 
   const dynamicWords = ['apps', 'AI tools', 'web apps', 'Chrome extensions', 'experiences'];
 
-  // Scroll to bottom when new messages are added
+  const particlesInit = async (main) => {
+    await loadFull(main);
+  };
+
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const scrollToTop = () => {
-    messagesContainerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+    messagesContainerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Check if user can scroll
-  const checkScrollButtons = () => {
+  const checkScrollButtons = debounce(() => {
     if (messagesContainerRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = messagesContainerRef.current;
       setShowScrollButtons(scrollHeight > clientHeight);
     }
-  };
+  }, 100);
 
   useEffect(() => {
     scrollToBottom();
@@ -49,14 +55,12 @@ const Portfolio = () => {
     }
   }, [messages.length]);
 
-  // Dark mode persistence
   useEffect(() => {
     if (typeof window !== 'undefined' && window.localStorage) {
       localStorage.setItem('darkMode', darkMode.toString());
     }
   }, [darkMode]);
 
-  // Dynamic word cycling
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentWord((prev) => (prev + 1) % dynamicWords.length);
@@ -64,7 +68,6 @@ const Portfolio = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Format timestamp like modern chat platforms
   const formatTimestamp = (date) => {
     const now = new Date();
     const diff = now - date;
@@ -85,7 +88,6 @@ const Portfolio = () => {
     });
   };
 
-  // Response database
   const responses = {
     about: {
       text: "I'm a passionate developer who believes in building products that people genuinely love to use. With a background in full-stack development and a keen eye for design, I focus on creating experiences that are both technically excellent and delightfully intuitive. I'm constantly exploring new technologies and methodologies to push the boundaries of what's possible on the web.",
@@ -197,9 +199,8 @@ const Portfolio = () => {
     setInputValue('');
     setIsTyping(true);
 
-    // Simple keyword matching for custom messages
     const input = inputValue.toLowerCase();
-    let responseKey = 'about'; // default
+    let responseKey = 'about';
 
     if (input.includes('project') || input.includes('build') || input.includes('work')) {
       responseKey = 'projects';
@@ -232,25 +233,42 @@ const Portfolio = () => {
   };
 
   const theme = {
-    bg: darkMode ? 'bg-gray-950' : 'bg-white',
-    surface: darkMode ? 'bg-gray-900' : 'bg-gray-50',
-    surfaceElevated: darkMode ? 'bg-gray-800' : 'bg-white',
-    surfaceHover: darkMode ? 'hover:bg-gray-800' : 'hover:bg-gray-100',
+    bg: darkMode ? 'bg-gradient-to-b from-gray-950 to-gray-900' : 'bg-gradient-to-b from-white to-gray-50',
+    surface: darkMode ? 'bg-gray-900/80 backdrop-blur-md' : 'bg-white/80 backdrop-blur-md',
+    surfaceElevated: darkMode ? 'bg-gray-800/90 backdrop-blur-md' : 'bg-white/90 backdrop-blur-md',
+    surfaceHover: darkMode ? 'hover:bg-gray-700/80' : 'hover:bg-gray-100/80',
     text: darkMode ? 'text-gray-100' : 'text-gray-900',
-    textMuted: darkMode ? 'text-gray-400' : 'text-gray-600',
-    textSubtle: darkMode ? 'text-gray-500' : 'text-gray-500',
-    border: darkMode ? 'border-gray-800' : 'border-gray-200',
-    borderSubtle: darkMode ? 'border-gray-700' : 'border-gray-100',
-    accent: 'bg-blue-600',
-    accentHover: 'hover:bg-blue-700',
-    userBubble: darkMode ? 'bg-blue-600' : 'bg-blue-600',
-    botBubble: darkMode ? 'bg-gray-800' : 'bg-gray-100',
-    promptPill: darkMode ? 'bg-gray-800 hover:bg-gray-700 border-gray-700' : 'bg-white hover:bg-gray-50 border-gray-200'
+    textMuted: darkMode ? 'text-gray-300' : 'text-gray-600',
+    textSubtle: darkMode ? 'text-gray-400' : 'text-gray-500',
+    border: darkMode ? 'border-gray-700/50' : 'border-gray-200/50',
+    borderSubtle: darkMode ? 'border-gray-600/50' : 'border-gray-100/50',
+    accent: 'bg-gradient-to-r from-indigo-500 to-purple-600',
+    accentHover: 'hover:bg-gradient-to-r from-indigo-600 to-purple-700',
+    userBubble: 'bg-gradient-to-r from-indigo-500 to-purple-600',
+    botBubble: darkMode ? 'bg-gray-800/80 backdrop-blur-md' : 'bg-gray-100/80 backdrop-blur-md',
+    promptPill: darkMode ? 'bg-gray-800/80 hover:bg-gray-700/80 border-gray-700/50' : 'bg-white/80 hover:bg-gray-50/80 border-gray-200/50'
   };
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${theme.bg} ${theme.text} font-rethink`}>
-      {/* Header with Blur Effect */}
+    <div className={`min-h-screen transition-colors duration-300 ${theme.bg} ${theme.text} font-rethink relative`}>
+      <Particles
+        id="tsparticles"
+        init={particlesInit}
+        options={{
+          particles: {
+            number: { value: 50 },
+            size: { value: 3 },
+            move: { speed: 0.5 },
+            opacity: { value: 0.3 }
+          },
+          interactivity: {
+            events: {
+              onhover: { enable: true, mode: 'repulse' }
+            }
+          }
+        }}
+        className="absolute inset-0 z-0"
+      />
       <header className={`${darkMode ? 'bg-transparent' : theme.surfaceElevated} sticky top-0 z-50 backdrop-blur-lg bg-opacity-80`}>
         <div className="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
           <div className="flex items-center space-x-3">
@@ -263,6 +281,7 @@ const Portfolio = () => {
                 onClick={resetConversation}
                 className={`p-2 rounded-lg ${theme.surfaceHover} transition-colors`}
                 title="Reset conversation"
+                aria-label="Reset conversation"
               >
                 <RotateCcw className="w-4 h-4" />
               </button>
@@ -270,6 +289,7 @@ const Portfolio = () => {
             <button
               onClick={() => setDarkMode(!darkMode)}
               className={`p-2 rounded-lg ${theme.surfaceHover} transition-colors`}
+              aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
             >
               {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
@@ -277,31 +297,41 @@ const Portfolio = () => {
         </div>
       </header>
 
-      <div className="max-w-3xl mx-auto px-4 py-6 relative">
-        {/* Hero Section */}
+      <div className="max-w-full sm:max-w-3xl mx-auto px-4 py-6 relative">
         {messages.length === 0 && (
-          <div className="flex flex-col items-center justify-center min-h-[70vh] space-y-8">
-            {/* Logo and Title */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className={`flex flex-col items-center justify-center min-h-[50vh] sm:min-h-[60vh] space-y-8 bg-gradient-to-br ${darkMode ? 'from-gray-950 to-gray-900' : 'from-blue-50 to-white'}`}
+          >
             <div className="text-center">
               <div className="flex justify-center mb-8">
-                <div className="w-20 h-20 rounded-full overflow-hidden shadow-lg">
+                <div className="w-20 h-20 rounded-full overflow-hidden shadow-lg avatar-container">
                   <img 
-                    src="/Sanj Notion Pic.png" 
+                    src="/sanj-notion-pic.png" 
                     alt="Sanjhai Avatar" 
                     className="w-full h-full object-cover"
+                    onError={(e) => (e.target.src = '/fallback-avatar.png')}
                   />
                 </div>
               </div>
-              <h2 className="text-7xl md:text-8xl font-bold mb-4 leading-tight">
+              <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight">
                 I build lovable
                 <br />
-                <span className="inline-block transition-all duration-500 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent font-bold">
+                <motion.span
+                  key={currentWord}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5 }}
+                  className="inline-block bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent font-bold"
+                >
                   {dynamicWords[currentWord]}
-                </span>
+                </motion.span>
               </h2>
             </div>
 
-            {/* Main Input Field with Increased Height */}
             <div className="w-full max-w-3xl">
               <div className={`${theme.surfaceElevated} border ${theme.border} rounded-2xl p-8 shadow-sm`}>
                 <div className="flex items-center space-x-4">
@@ -312,11 +342,13 @@ const Portfolio = () => {
                     onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                     placeholder="What do you want to know?"
                     className={`flex-1 bg-transparent outline-none ${theme.text} placeholder-gray-400 font-normal text-xl py-4`}
+                    autoFocus
                   />
                   <button
                     onClick={handleSendMessage}
                     disabled={!inputValue.trim() || isTyping}
                     className={`p-4 rounded-full ${theme.accent} ${theme.accentHover} disabled:opacity-50 disabled:cursor-not-allowed transition-colors`}
+                    aria-label="Send message"
                   >
                     <Send className="w-5 h-5 text-white" />
                   </button>
@@ -324,89 +356,114 @@ const Portfolio = () => {
               </div>
             </div>
 
-            {/* Feature Buttons */}
             <div className="flex flex-wrap gap-3 justify-center">
               {initialPrompts.map((prompt, index) => (
                 <button
                   key={index}
                   onClick={() => handlePromptClick(prompt.key)}
-                  className={`px-5 py-3 rounded-xl ${theme.promptPill} border transition-all duration-200 hover:scale-105 font-medium flex items-center gap-2 text-sm`}
+                  className={`px-5 py-3 rounded-xl ${theme.promptPill} border transition-all duration-200 hover:scale-105 font-medium flex items-center gap-2 text-sm prompt-pill`}
+                  aria-label={prompt.text}
                 >
                   <prompt.icon className="w-4 h-4" />
                   {prompt.text}
                 </button>
               ))}
             </div>
-          </div>
+          </motion.div>
         )}
 
-        {/* Messages */}
         {messages.length > 0 && (
           <div className="relative">
+            <div className="flex justify-end mb-4">
+              <button
+                onClick={resetConversation}
+                className={`px-4 py-2 rounded-lg ${theme.accent} ${theme.accentHover} text-white flex items-center gap-2`}
+                aria-label="Reset conversation"
+              >
+                <RotateCcw className="w-4 h-4" />
+                Reset Conversation
+              </button>
+            </div>
             <div ref={messagesContainerRef} className="space-y-6 mb-6 max-h-[70vh] overflow-y-auto">
-              {messages.map((message, index) => (
-                <div key={index} className="space-y-2">
-                  <div className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'} items-start gap-3`}>
-                    {/* Avatar for bot messages */}
-                    {message.type === 'bot' && (
-                      <div className="w-8 h-8 rounded-full overflow-hidden shadow-sm flex-shrink-0 mt-1">
-                        <img 
-                          src="/Sanj Notion Pic.png" 
-                          alt="Sanjhai Avatar" 
-                          className="w-full h-full object-cover"
-                        />
+              <AnimatePresence>
+                {messages.map((message, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3 }}
+                    className="space-y-2"
+                  >
+                    <div className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'} items-start gap-3`}>
+                      {message.type === 'bot_episodebot' && (
+                        <div className="w-8 h-8 rounded-full overflow-hidden shadow-sm flex-shrink-0 mt-1 avatar-container">
+                          <img 
+                            src="/sanj-notion-pic.png" 
+                            alt="Sanjhai Avatar" 
+                            className="w-full h-full object-cover"
+                            onError={(e) => (e.target.src = '/fallback-avatar.png')}
+                          />
+                        </div>
+                      )}
+                      <div className={`max-w-2xl ${message.type === 'user' 
+                        ? `${theme.userBubble} text-white` 
+                        : `${theme.botBubble}`
+                      } rounded-2xl px-4 py-3`}>
+                        <div className="whitespace-pre-wrap font-normal leading-relaxed">{message.text}</div>
+                      </div>
+                    </div>
+                    <div className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}>
+                      <span className={`text-xs ${theme.textSubtle} px-2 font-normal ${message.type === 'bot' ? 'ml-11' : ''}`}>
+                        {formatTimestamp(message.timestamp)}
+                      </span>
+                    </div>
+                    {message.type === 'bot' && message.prompts && (
+                      <div className="flex flex-wrap gap-2 mt-3 ml-11">
+                        {message.prompts.map((prompt, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => handlePromptClick(prompt.key)}
+                            className={`px-3 py-1.5 rounded-full text-sm ${theme.promptPill} border transition-all duration-200 hover:scale-105 font-medium flex items-center gap-1.5 prompt-pill`}
+                            aria-label={prompt.text}
+                          >
+                            <prompt.icon className="w-3 h-3" />
+                            {prompt.text}
+                          </button>
+                        ))}
                       </div>
                     )}
-                    
-                    <div className={`max-w-2xl ${message.type === 'user' 
-                      ? `${theme.userBubble} text-white` 
-                      : `${theme.botBubble}`
-                    } rounded-2xl px-4 py-3`}>
-                      <div className="whitespace-pre-wrap font-normal leading-relaxed">{message.text}</div>
-                    </div>
-                  </div>
-                  
-                  {/* Timestamp */}
-                  <div className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}>
-                    <span className={`text-xs ${theme.textSubtle} px-2 font-normal ${message.type === 'bot' ? 'ml-11' : ''}`}>
-                      {formatTimestamp(message.timestamp)}
-                    </span>
-                  </div>
-                  
-                  {/* Prompt Suggestions for Bot Messages */}
-                  {message.type === 'bot' && message.prompts && (
-                    <div className="flex flex-wrap gap-2 mt-3 ml-11">
-                      {message.prompts.map((prompt, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => handlePromptClick(prompt.key)}
-                          className={`px-3 py-1.5 rounded-full text-sm ${theme.promptPill} border transition-all duration-200 hover:scale-105 font-medium flex items-center gap-1.5`}
-                        >
-                          <prompt.icon className="w-3 h-3" />
-                          {prompt.text}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-              
-              {/* Typing Indicator */}
+                  </motion.div>
+                ))}
+              </AnimatePresence>
               {isTyping && (
                 <div className="space-y-2">
                   <div className="flex justify-start items-start gap-3">
-                    <div className="w-8 h-8 rounded-full overflow-hidden shadow-sm flex-shrink-0 mt-1">
+                    <div className="w-8 h-8 rounded-full overflow-hidden shadow-sm flex-shrink-0 mt-1 avatar-container">
                       <img 
-                        src="/Sanj Notion Pic.png" 
+                        src="/sanj-notion-pic.png" 
                         alt="Sanjhai Avatar" 
                         className="w-full h-full object-cover"
+                        onError={(e) => (e.target.src = '/fallback-avatar.png')}
                       />
                     </div>
                     <div className={`${theme.botBubble} rounded-2xl px-4 py-3`}>
-                      <div className="flex space-x-1">
-                        <div className={`w-2 h-2 bg-gray-400 rounded-full animate-pulse`}></div>
-                        <div className={`w-2 h-2 bg-gray-400 rounded-full animate-pulse`} style={{animationDelay: '0.2s'}}></div>
-                        <div className={`w-2 h-2 bg-gray-400 rounded-full animate-pulse`} style={{animationDelay: '0.4s'}}></div>
+                      <div className="flex space-x-1.5">
+                        <motion.div
+                          className="w-2.5 h-2.5 bg-blue-500 rounded-full"
+                          animate={{ y: [-5, 5, -5] }}
+                          transition={{ repeat: Infinity, duration: 0.6 }}
+                        />
+                        <motion.div
+                          className="w-2.5 h-2.5 bg-blue-500 rounded-full"
+                          animate={{ y: [-5, 5, -5] }}
+                          transition={{ repeat: Infinity, duration: 0.6, delay: 0.2 }}
+                        />
+                        <motion.div
+                          className="w-2.5 h-2.5 bg-blue-500 rounded-full"
+                          animate={{ y: [-5, 5, -5] }}
+                          transition={{ repeat: Infinity, duration: 0.6, delay: 0.4 }}
+                        />
                       </div>
                     </div>
                   </div>
@@ -420,18 +477,19 @@ const Portfolio = () => {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Scroll Buttons - Inside Chat Interface */}
             {messages.length > 0 && showScrollButtons && (
               <div className="fixed right-6 bottom-24 flex flex-col gap-2 z-40">
                 <button
                   onClick={scrollToTop}
                   className={`p-3 rounded-full ${theme.surfaceElevated} ${theme.border} border shadow-lg hover:scale-110 transition-all opacity-90 hover:opacity-100`}
+                  aria-label="Scroll to top"
                 >
                   <ChevronUp className="w-4 h-4" />
                 </button>
                 <button
                   onClick={scrollToBottom}
                   className={`p-3 rounded-full ${theme.surfaceElevated} ${theme.border} border shadow-lg hover:scale-110 transition-all opacity-90 hover:opacity-100`}
+                  aria-label="Scroll to bottom"
                 >
                   <ChevronDown className="w-4 h-4" />
                 </button>
@@ -440,7 +498,6 @@ const Portfolio = () => {
           </div>
         )}
 
-        {/* Input - Only show during conversation */}
         {messages.length > 0 && (
           <div className={`${theme.surfaceElevated} border ${theme.border} rounded-2xl p-4 sticky bottom-4 shadow-sm`}>
             <div className="flex items-center space-x-3">
@@ -451,11 +508,13 @@ const Portfolio = () => {
                 onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                 placeholder="Message Sanjhai..."
                 className={`flex-1 bg-transparent outline-none ${theme.text} placeholder-gray-400 font-normal py-1`}
+                autoFocus
               />
               <button
                 onClick={handleSendMessage}
                 disabled={!inputValue.trim() || isTyping}
                 className={`p-3 rounded-full ${theme.accent} ${theme.accentHover} disabled:opacity-50 disabled:cursor-not-allowed transition-colors`}
+                aria-label="Send message"
               >
                 <Send className="w-4 h-4 text-white" />
               </button>
